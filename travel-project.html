@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travel Explorer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    header { background: #3498db; color: #fff; padding: 20px; text-align: center; }
+    nav { background: #2c3e50; padding: 10px; text-align: center; }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #f1c40f;
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero h1 {
+      color: white;
+      font-size: 48px;
+      background: rgba(0,0,0,0.4);
+      padding: 15px 30px;
+      border-radius: 10px;
+    }
+
+    .section {
+      padding: 40px 20px;
+      background-color: #f0f8ff;
+    }
+
+    .section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .card div {
+      padding: 15px;
+    }
+
+    .package, .blog {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .package h3, .blog h3 {
+      color: #3498db;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: auto;
+      max-width: 600px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    form input, form textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    form button {
+      padding: 10px 20px;
+      background: lightpink;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+    }
+
+    .destinations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Travel Explorer</h2>
+  </header>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#destinations">Destinations</a>
+    <a href="#explore">Explore</a>
+    <a href="#plan">Plan a Trip</a>
+    <a href="#packages">Packages</a>
+    <a href="#blogs">Travel Blogs</a>
+    <a href="#signup">Signup</a>
+    <a href="#profile">Login</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>Your Adventure Starts Here</h1>
+  </section>
+
+  <!-- Destinations -->
+  <section id="destinations">
+    <h2 style="text-align:center; margin-bottom: 30px;">Top Destinations</h2>
+    <div class="destinations">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Beach">
+        <div>
+          <h3>Maldives</h3>
+          <p>Experience white sandy beaches and crystal clear water.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="himalaya.jpeg" alt="Mountains">
+        <div>
+          <h3>Himalayas</h3>
+          <p>Embark on a thrilling hiking journey among the peaks.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c" alt="City">
+        <div>
+          <h3>Paris</h3>
+          <p>Explore the city of love, lights, and culture.</p>
+          <div class="rating"><span>★ ★ ★ ☆ ☆</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c" alt="Tokyo">
+        <div>
+          <h3>Tokyo</h3>
+          <p>Discover the perfect blend of tradition and technology.</p>
+          <div class="rating"><span>★ ★ ★ ★ ★</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan a Trip -->
+  <section class="section" id="plan" style="background-color: #e3f2fd;">
+    <h2>Plan a Trip</h2>
+    <form>
+      <input type="text" placeholder="Your Destination" required>
+      <input type="date" required>
+      <input type="number" placeholder="Travelers" required>
+      <textarea rows="3" placeholder="Any special requests?"></textarea>
+      <button type="submit">Plan My Trip</button>
+    </form>
+  </section>
+
+  <!-- Packages -->
+  <section class="section" id="packages">
+    <h2>Packages & Offers</h2>
+    <div class="card-grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Maldives Deal">
+        <div>
+          <h3>Maldives Luxury Escape</h3>
+          <p>5 nights water villa + all meals + snorkeling - <strong>$1999</strong></p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba" alt="Paris">
+        <div>
+          <h3>Paris Romantic Getaway</h3>
+          <p>3 nights in Paris + Seine River cruise + Eiffel Tower dinner - <strong>$2799</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Travel Blogs -->
+  <section class="section" id="blogs" style="background-color: #fef9e7;">
+    <h2>Travel Guides & Blogs</h2>
+    <div class="card-grid">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Beach Blog">
+        <div>
+          <h3>Top 10 Beaches in 2025</h3>
+          <p>Discover the best beaches for relaxation, surfing, and sunsets this year!</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1523966211575-eb4a4e9a3b2a" alt="Packing">
+        <div>
+          <h3>Packing Smart for Long Trips</h3>
+          <p>Tips for packing light and right to make travel stress-free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signup Section -->
+  <section class="section" id="signup">
+        <h2>Create an Account</h2>
+    <form id="signupForm">
+      <input type="text" placeholder="Full Name"  required>
+      <input type="email" placeholder="Email Address"  required>
+      <input type="password" placeholder="Create Password"  required>
+      <input type="password" placeholder="Confirm Password"  required>
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+
+  <!-- Login Section -->
+  <section class="section" id="profile" style="background-color: #f2f2f2;">
+    <h2>Login to Your Account</h2>
+    <form id="loginForm">
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <h3>Contact Us</h3>
+    <p>Email: travelExplorer@gmail.com | Phone: +91 9876543210</p>
+    <p>Address: 123 Travel Lane, Adventure City, World</p>
+    <p>&copy; 2025 Travel Explorer. All rights reserved.</p>
+  </footer>
+
+
+  <script>
+    // Signup Form Validation
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = e.target.name.value.trim();
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
+      const confirmPassword = e.target.confirmPassword.value;
+
+      if (!name || !email || !password || !confirmPassword) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      alert("Signup Successful!");
+      e.target.reset();
+    });
+
+    // Login Form Validation
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
+
+      if (!email || !password) {
+        alert("Please enter both email and password.");
+        return;
+      }
+
+      if (email === "user@gmail.com" && password === "password123") {
+        alert("Login successful!");
+        e.target.reset();
+      } else {
+        alert("login successfull!");
+      }
+    
+    });
+  </script>
+</body>
+</html>
