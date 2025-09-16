@@ -1,328 +1,674 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Travel Explorer</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    header { background: #3498db; color: #fff; padding: 20px; text-align: center; }
-    nav { background: #2c3e50; padding: 10px; text-align: center; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f9f9f9;
+    }
+
+    section {
+      padding: 20px 100px;
+    }
+
+    header {
+      background: #3498db;
+      color: #fff;
+      padding: 20px 100px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    nav {
+      background: #2c3e50;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      user-select: none;
+    }
+
     nav a {
       color: #fff;
-      margin: 0 15px;
+      font-size: 17px;
+      margin: 0 20px;
       text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s ease;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      padding-bottom: 4px;
+      border-bottom: 3px solid transparent;
     }
-    nav a:hover {
+
+    nav a:hover,
+    nav a.active {
+      border-color: #f1c40f;
       color: #f1c40f;
     }
 
-    .hero {
-      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center/cover;
-      height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero h1 {
-      color: white;
-      font-size: 48px;
-      background: rgba(0,0,0,0.4);
-      padding: 15px 30px;
-      border-radius: 10px;
-    }
-
-    .section {
-      padding: 40px 20px;
-      background-color: #f0f8ff;
-    }
-
-    .section h2 {
-      text-align: center;
-      margin-bottom: 30px;
+    /* Dark mode toggle button style */
+    #darkModeToggle {
+      cursor: pointer;
+      margin-left: auto;
+      background: #f1c40f;
+      border: none;
+      padding: 6px 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      font-weight: 700;
       color: #2c3e50;
+      transition: background 0.3s ease;
     }
 
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: auto;
+    #darkModeToggle:hover {
+      background: #d4ac0d;
     }
 
-    .card {
-      background: #fff;
+    /* Hero Section */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      padding: 100px 100px 0 100px;
+      user-select: none;
+    }
+
+    .hero .text {
+      flex: 1;
+      padding-right: 50px;
+    }
+
+    .hero .text h1 {
+      font-size: 60px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .hero .text p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .hero .text a {
+      background: #3498db;
+      color: #fff;
+      padding: 12px 25px;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .hero .text a:hover {
+      background: #2980b9;
+    }
+
+    .hero img {
+      flex: 1;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+    }
+
+    /* Slider Section */
+    .slider {
+      margin-top: 50px;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .slide-track {
+      display: flex;
+      animation: scroll 30s linear infinite;
+    }
+
+    .slide {
+      flex: 0 0 auto;
+      width: 300px;
+      margin-right: 30px;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      cursor: grab;
       transition: transform 0.3s ease;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card img {
+    .slide img {
       width: 100%;
-      height: 160px;
+      display: block;
       object-fit: cover;
+      height: 200px;
     }
 
-    .card div {
-      padding: 15px;
+    .slide:hover {
+      transform: scale(1.05);
     }
 
-    .package, .blog {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 15px 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(-300px * 7 - 30px * 7));
+      }
     }
 
-    .package h3, .blog h3 {
-      color: #3498db;
-    }
-
-    form {
+    /* Destinations Section */
+    .destinations {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: auto;
-      max-width: 600px;
-      padding: 20px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+
+    .destination {
+      flex-basis: 31%;
+      margin-bottom: 30px;
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
     }
 
-    form input, form textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .destination:hover {
+      box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
     }
 
-    form button {
-      padding: 10px 20px;
-      background: lightpink;
-      color: white;
-      border: none;
-      border-radius: 5px;
+    .destination img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 3px solid #3498db;
+      transition: transform 0.3s ease;
+    }
+
+    .destination:hover img {
+      transform: scale(1.05);
+    }
+
+    .destination .content {
+      padding: 15px 20px;
+    }
+
+    .destination .content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .destination .content p {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    /* Packages Section */
+    .packages {
+      background: #3498db;
+      color: #fff;
+      border-radius: 15px;
+      padding: 40px 100px;
+      margin: 50px 0;
+      user-select: none;
+    }
+
+    .packages h2 {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 40px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .package-list {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .package {
+      flex-basis: 30%;
+      background: #2980b9;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      transition: background 0.3s ease;
       cursor: pointer;
     }
 
+    .package:hover {
+      background: #1c5980;
+    }
+
+    .package h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .package p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Blogs Section */
+    .blogs {
+      padding-bottom: 100px;
+      user-select: none;
+    }
+
+    .blogs h2 {
+      font-size: 40px;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #333;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .blog-list {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .blog {
+      flex-basis: 30%;
+      box-shadow: 0 0 20px rgba(52, 152, 219, 0.15);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .blog:hover {
+      box-shadow: 0 0 30px rgba(52, 152, 219, 0.4);
+    }
+
+    .blog img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .blog:hover img {
+      transform: scale(1.05);
+    }
+
+    .blog .content {
+      padding: 20px;
+    }
+
+    .blog .content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #3498db;
+    }
+
+    .blog .content p {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+
+    /* Contact Section */
+    #contact {
+      background: #2c3e50;
+      color: white;
+      padding: 50px 100px;
+      text-align: center;
+      user-select: none;
+    }
+
+    #contact h2 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    #contact p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
     footer {
-      background: #333;
+      background: #34495e;
       color: white;
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px 100px;
+      user-select: none;
     }
 
-    footer h3 {
-      margin-bottom: 10px;
+    /* Scroll to top button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 15px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      user-select: none;
+      z-index: 100;
+      transition: background 0.3s ease;
     }
 
-    .destinations {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+    #scrollTopBtn:hover {
+      background: #2980b9;
     }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background: #222;
+      color: #ccc;
+    }
+
+    body.dark-mode header {
+      background: #222;
+      color: #f1c40f;
+    }
+
+    body.dark-mode nav {
+      background: #111;
+    }
+
+    body.dark-mode nav a {
+      color: #ccc;
+    }
+
+    body.dark-mode nav a:hover,
+    body.dark-mode nav a.active {
+      color: #f1c40f;
+    }
+
+    body.dark-mode .hero .text h1,
+    body.dark-mode .hero .text p,
+    body.dark-mode .destinations .destination .content h3,
+    body.dark-mode .destinations .destination .content p,
+    body.dark-mode .blogs .blog .content h3,
+    body.dark-mode .blogs .blog .content p,
+    body.dark-mode #signup h2,
+    body.dark-mode #profile h2,
+    body.dark-mode #contact h2,
+    body.dark-mode #contact p,
+    body.dark-mode footer {
+      color: #ccc;
+    }
+
+    body.dark-mode .packages {
+      background: #1a237e;
+    }
+
+    body.dark-mode .packages .package {
+      background: #303f9f;
+    }
+
+    body.dark-mode .packages .package:hover {
+      background: #283593;
+    }
+ #mapSection {
+      padding: 50px 100px;
+      text-align: center;
+    }
+
+    #mapSection h2 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
   </style>
 </head>
+
 <body>
-
   <header>
-    <h2>Travel Explorer</h2>
+    <h2>Travel Explorer
+  <img src="cct logo.png" alt="CCT Logo" style="max-width: 180px;"></h2>
   </header>
-
   <nav>
-    <a href="#home">Home</a>
-    <a href="#destinations">Destinations</a>
-    <a href="#explore">Explore</a>
-    <a href="#plan">Plan a Trip</a>
-    <a href="#packages">Packages</a>
-    <a href="#blogs">Travel Blogs</a>
-    <a href="#signup">Signup</a>
-    <a href="#profile">Login</a>
-    <a href="#contact">Contact Us</a>
+    <a href="index.html" class="active">Home</a>
+    <a href="map.html">Map & Weather</a>
+    <a href="signup.html">Signup</a>
+    <a href="login.html">Login</a>
+    <a href="package.html">Travel Packages</a>
+    <a href="#contact">Contact</a>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
   </nav>
 
-  <section class="hero" id="home">
-    <h1>Your Adventure Starts Here</h1>
+  <section class="hero">
+    <div class="text">
+      <h1>Your Adventure Starts Here</h1>
+      <p>Explore the world's most beautiful destinations with Travel Explorer. Find packages, travel tips, and blogs to inspire
+        your journey.</p>
+      <a href="package.html">Explore Packages</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Travel">
   </section>
 
-  <!-- Destinations -->
-  <section id="destinations">
-    <h2 style="text-align:center; margin-bottom: 30px;">Top Destinations</h2>
-    <div class="destinations">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Beach">
-        <div>
-          <h3>Maldives</h3>
-          <p>Experience white sandy beaches and crystal clear water.</p>
+  <section class="slider" aria-label="Featured Destinations Slider">
+    <div class="slide-track" id="slideTrack">
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=400&q=60"
+          alt="Paris">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=60"
+          alt="New York">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=400&q=60"
+          alt="Tokyo">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=60"
+          alt="Sydney">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=400&q=60"
+          alt="Rome">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1486308510493-cb6f5e5c005a?auto=format&fit=crop&w=400&q=60"
+          alt="London">
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?auto=format&fit=crop&w=400&q=60"
+          alt="Dubai">
+      </div>
+    </div>
+  </section>
+
+  <section class="destinations" aria-label="Popular Destinations">
+    <div class="destination" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=60"
+        alt="Maldives">
+      <div class="content">
+        <h3>Maldives</h3>
+        <p
+```        <p>Experience the crystal-clear waters and white sandy beaches in this tropical paradise.</p>
+      </div>
+    </div>
+    <div class="destination" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=60" alt="Bali">
+      <div class="content">
+        <h3>Bali</h3>
+        <p>Enjoy vibrant culture, beautiful temples, and stunning beaches on the Island of the Gods.</p>
+      </div>
+    </div>
+    <div class="destination" tabindex="0">
+      <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=400&q=60" alt="Swiss Alps">
+      <div class="content">
+        <h3>Swiss Alps</h3>
+        <p>Explore breathtaking mountain landscapes, perfect for skiing and hiking adventures.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="packages" id="packages" aria-label="Travel Packages">
+    <h2>Our Travel Packages</h2>
+    <div class="package-list">
+      <div class="package" tabindex="0">
+        <h3>Romantic Paris</h3>
+        <p>5 days of love and lights, including Eiffel Tower visits and Seine river cruises.</p>
+      </div>
+      <div class="package" tabindex="0">
+        <h3>Safari Adventure</h3>
+        <p>Experience the wild in Kenya's Masai Mara with guided tours and luxury tents.</p>
+      </div>
+      <div class="package" tabindex="0">
+        <h3>Asian Highlights</h3>
+        <p>Explore Tokyo, Seoul, and Bangkok with expert guides and cultural immersion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blogs" aria-label="Travel Blogs">
+    <h2>Travel Blogs</h2>
+    <div class="blog-list">
+      <div class="blog" tabindex="0">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=60" alt="Travel Tips">
+        <div class="content">
+          <h3>10 Essential Travel Tips</h3>
+          <p>Get the most out of your trips with these helpful hints from seasoned travelers.</p>
         </div>
       </div>
-
-      <div class="card">
-        <img src="himalaya.jpeg" alt="Mountains">
-        <div>
-          <h3>Himalayas</h3>
-          <p>Embark on a thrilling hiking journey among the peaks.</p>
+      <div class="blog" tabindex="0">
+        <img src="https://images.unsplash.com/photo-1486308510493-cb6f5e5c005a?auto=format&fit=crop&w=400&q=60" alt="Cultural Insights">
+        <div class="content">
+          <h3>Understanding Local Cultures</h3>
+          <p>How to respectfully engage and enjoy new cultures during your travels.</p>
         </div>
       </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c" alt="City">
-        <div>
-          <h3>Paris</h3>
-          <p>Explore the city of love, lights, and culture.</p>
-          <div class="rating"><span>★ ★ ★ ☆ ☆</span></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c" alt="Tokyo">
-        <div>
-          <h3>Tokyo</h3>
-          <p>Discover the perfect blend of tradition and technology.</p>
-          <div class="rating"><span>★ ★ ★ ★ ★</span></div>
+      <div class="blog" tabindex="0">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=60" alt="Packing Guide">
+        <div class="content">
+          <h3>The Ultimate Packing Guide</h3>
+          <p>Pack smart and light with our comprehensive guide to essentials for any trip.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Plan a Trip -->
-  <section class="section" id="plan" style="background-color: #e3f2fd;">
-    <h2>Plan a Trip</h2>
-    <form>
-      <input type="text" placeholder="Your Destination" required>
-      <input type="date" required>
-      <input type="number" placeholder="Travelers" required>
-      <textarea rows="3" placeholder="Any special requests?"></textarea>
-      <button type="submit">Plan My Trip</button>
-    </form>
+  
+
+ 
+<!-- Google Map Section -->
+  <section id="mapSection" aria-label="Map Section">
+    <h2>Explore on the Map</h2>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31513600.546705324!2d-3.041174751290257!3d37.09024077421183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDA1JzI0LjkiTiA3McKwMDUnMzAuNSJF!5e0!3m2!1sen!2sus!4v1628694321767!5m2!1sen!2sus"
+      width="100%" height="400" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </section>
 
-  <!-- Packages -->
-  <section class="section" id="packages">
-    <h2>Packages & Offers</h2>
-    <div class="card-grid">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Maldives Deal">
-        <div>
-          <h3>Maldives Luxury Escape</h3>
-          <p>5 nights water villa + all meals + snorkeling - <strong>$1999</strong></p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba" alt="Paris">
-        <div>
-          <h3>Paris Romantic Getaway</h3>
-          <p>3 nights in Paris + Seine River cruise + Eiffel Tower dinner - <strong>$2799</strong></p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Travel Blogs -->
-  <section class="section" id="blogs" style="background-color: #fef9e7;">
-    <h2>Travel Guides & Blogs</h2>
-    <div class="card-grid">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Beach Blog">
-        <div>
-          <h3>Top 10 Beaches in 2025</h3>
-          <p>Discover the best beaches for relaxation, surfing, and sunsets this year!</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1523966211575-eb4a4e9a3b2a" alt="Packing">
-        <div>
-          <h3>Packing Smart for Long Trips</h3>
-          <p>Tips for packing light and right to make travel stress-free.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section id="contact" aria-label="Contact Information">
+    <h2>Contact</h2>
+    <p>Have questions or need help? Reach out to our support team anytime.</p>
+    <p>Email: support@travelexplorer.com</p>
+    <p>Phone: +1 234 567 890</p>
+  </section>  
 
-  <!-- Signup Section -->
-  <section class="section" id="signup">
-        <h2>Create an Account</h2>
-    <form id="signupForm">
-      <input type="text" placeholder="Full Name"  required>
-      <input type="email" placeholder="Email Address"  required>
-      <input type="password" placeholder="Create Password"  required>
-      <input type="password" placeholder="Confirm Password"  required>
-      <button type="submit">Sign Up</button>
-    </form>
-  </section>
-
-  <!-- Login Section -->
-  <section class="section" id="profile" style="background-color: #f2f2f2;">
-    <h2>Login to Your Account</h2>
-    <form id="loginForm">
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer id="contact">
-    <h3>Contact Us</h3>
-    <p>Email: travelExplorer@gmail.com | Phone: +91 9876543210</p>
-    <p>Address: 123 Travel Lane, Adventure City, World</p>
-    <p>&copy; 2025 Travel Explorer. All rights reserved.</p>
-  </footer>
-
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 
   <script>
-    // Signup Form Validation
-    document.getElementById("signupForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const name = e.target.name.value.trim();
-      const email = e.target.email.value.trim();
-      const password = e.target.password.value;
-      const confirmPassword = e.target.confirmPassword.value;
-
-      if (!name || !email || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-      }
-
-      alert("Signup Successful!");
-      e.target.reset();
-    });
-
-    // Login Form Validation
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const email = e.target.email.value.trim();
-      const password = e.target.password.value;
-
-      if (!email || !password) {
-        alert("Please enter both email and password.");
-        return;
-      }
-
-      if (email === "user@gmail.com" && password === "password123") {
-        alert("Login successful!");
-        e.target.reset();
+    // Dark mode toggle script
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        darkModeToggle.textContent = '☀️ Light Mode';
       } else {
-        alert("login successfull!");
+        darkModeToggle.textContent = '🌙 Dark Mode';
       }
-    
     });
+
+    // Scroll to top button script
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.style.display = 'block';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Slider drag support (optional)
+    const slideTrack = document.getElementById('slideTrack');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slideTrack.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slideTrack.style.cursor = 'grabbing';
+      startX = e.pageX - slideTrack.offsetLeft;
+      scrollLeft = slideTrack.scrollLeft;
+      e.preventDefault();
+    });
+
+    slideTrack.addEventListener('mouseleave', () => {
+      isDown = false;
+      slideTrack.style.cursor = 'grab';
+    });
+
+    slideTrack.addEventListener('mouseup', () => {
+      isDown = false;
+      slideTrack.style.cursor = 'grab';
+    });
+
+    slideTrack.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slideTrack.offsetLeft;
+      const walk = (x - startX) * 2; // scroll-fast
+      slideTrack.scrollLeft = scrollLeft - walk;
+    });
+
   </script>
 </body>
+
 </html>
+
+   
